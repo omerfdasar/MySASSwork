@@ -1,0 +1,138 @@
+@import "variables";
+@import "reset";
+@import "mixin";
+@import "article";
+.container {
+  padding: 0 1rem;
+}
+
+// variable usage
+body {
+  background-color: $bgColor;
+  font-family: $fontFamily;
+  font-size: $fontSize;
+  color: $fontColor;
+}
+
+// nesting usage
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  background-color: $navBgColor;
+  .brand {
+    img {
+      width: 80px;
+      border: red 1px solid;
+      border-radius: 30%;
+      padding: 10px;
+      margin: 10px;
+    }
+  }
+  .navbar {
+    margin: 10px;
+    ul {
+      list-style-type: none;
+      display: flex;
+      li {
+        a {
+          text-decoration: none;
+          padding: 5px;
+          color: black;
+          font-size: $myLinkSize;
+        }
+        input {
+          width: 60px;
+        }
+      }
+    }
+  }
+}
+//? SLIDER
+//?----------------------------------------
+.slider {
+  display: flex;
+  justify-content: space-evenly;
+  background-color: $sliderBgColor;
+  .left {
+    margin-top: 20px;
+    button {
+      padding: 10px;
+      border-radius: 10px;
+      margin: 10px;
+      background-color: $navBgColor;
+      font-size: $myLinkSize;
+      border: 2px solid gray;
+
+      /***  IMPORTANT  ***/
+      // I used ampersand because it does recognize as if some other button
+      &:hover {
+        background-color: pink;
+        border: 2px solid pink;
+      }
+    }
+  }
+  img {
+    width: 30%;
+  }
+}
+
+// Mixin Usage
+.content {
+  .cards {
+    display: flex;
+    .card1 {
+      @include myBox(brown, white);
+    }
+    .card2 {
+      @include myBox(yellow, blue);
+    }
+    .card3 {
+      @include myBox(firebrick, gray);
+    }
+    .card4 {
+      @include myBox(green, blue);
+    }
+  }
+}
+// extends usage 2
+article {
+  .article2 {
+    @extend .article1;
+    background-color: purple;
+  }
+}
+
+// for loop for shading from black to grey
+.socialBoxes {
+  display: flex;
+  @for $i from 1 through 5 {
+    .social#{$i} {
+      width: 20%;
+      height: 100px;
+      background-color: lighten(#000000, ($i * 10));
+    }
+  }
+}
+
+// arrays
+$textColor: #990000, #55004e, #0fa8a1, #121456, #64c217;
+@for $i from 1 through length($textColor) {
+  .social#{$i} {
+    color: nth($textColor, $i);
+    font-size: $i * 1rem;
+    font-weight: 600;
+  }
+}
+
+// IF ELSE
+$dark: 3;
+.footer {
+  @if $dark == 1 {
+    background-color: white;
+  } @else if $dark == 2 {
+    background-color: gray;
+  } @else {
+    background-color: green;
+  }
+}
